@@ -98,6 +98,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 const WeatherApp = () => {
   const [cityName, setCityName] = useState('');
@@ -109,6 +110,8 @@ console.log(weatherData);
     try {
       const response = await axios.get(apiUrl);
       setWeatherData(response.data);
+      const uniqueDates = [...new Set(weatherData.list.map(item => item.dt_txt.split(' ')[0]))];
+      console.log("uniqueDates",uniqueDates);
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
@@ -135,8 +138,12 @@ console.log(weatherData);
 
       {weatherData ? (
         <div>
-          <h2>Weather Information</h2>
-          <p>Country: {weatherData.city.country}</p>
+         <h2>Weather Information</h2>
+            <p>Country: {weatherData.city.country}</p>
+            <p>Population: {weatherData.city.population}</p>
+            <p>Sunrise: {dayjs.unix(weatherData.city.sunrise).format('HH:mm:ss')}</p>
+            <p>Sunset: {dayjs.unix(weatherData.city.sunset).format('HH:mm:ss')}</p>
+            <p>Timezone: {weatherData.city.timezone}</p>
           {/* Add more weather information as needed */}
         </div>
       ) : (
