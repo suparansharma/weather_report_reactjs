@@ -5,6 +5,7 @@ ChartJS.register(...registerables);
 
 function LineChart(props) {
   const { labels, tempMaxArray, tempMinArray } = props;
+  console.log("call form child",tempMaxArray);
 
   const data = {
     labels: labels, // Use your date labels here
@@ -55,7 +56,7 @@ function LineChart(props) {
   };
 
   return (
-    <div>
+    <div  style={{ width: '800px', height: '600px' }}>
       <h2>Weather Forecast</h2>
       <Line data={data} />
     </div>
